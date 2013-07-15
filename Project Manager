@@ -1,0 +1,64 @@
+
+
+
+#####Tables######
+data
+user_id     movie_id     rating     timestamp
+
+item
+movie_id    movie_title      release_date    .....
+
+user 
+user_id     age     gender    occupation    zip_code
+
+#########Schema##########
+data
+user_id     movie_id     rating     timestamp
+
+item
+movie_id    movie_title      release_date    .....
+
+user 
+user_id    email	password	(age     gender    occupation    zip_code)
+
+A user has many movie ratings
+A movie has many user ratings
+A genre has many movies (A movie belongs to a certain/multiple genre(s))
+A user has certain preferences.
+User preferences have more weight based on occupation
+Find similarities in demographics and use to find similarities in taste
+
+
+
+CREATE table Users(user_id primary key, email varchar(64), password varchar(64), age integer, gender varchar(1), occupation varchar(64), zip_code integer)
+
+
+####### Project Schema#######
+User
+id: integer
+age: integer
+gender: string
+zip_code: string (technically zip codes aren't numeric)
+email: optional string
+password: optional string
+
+Movie:
+id: integer
+name: string
+released_at: datetime
+imdb_url: string
+
+Rating:
+id: integer
+movie_id: integer
+user_id: integer
+rating: integer
+
+A user has many ratings
+A rating belongs to a user
+A movie has many ratings
+A rating belongs to a movie
+A user has many movies through ratings
+A movie has many users through ratings
+
+###For tues.... start with datetime....
