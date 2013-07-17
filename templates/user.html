@@ -1,0 +1,13 @@
+<html>
+    <!--{% for user in users %}
+    <h2> User {{ user.id }}, age {{ user.age }}, has {{ user.ratings|length }} ratings</h2>
+    {% endfor %} -->
+<body>
+    <h2> User {{email}}, Age {{age}}, Zipcode {{zipcode}} </h2>
+    {% for rating in ratings %}
+    <p><h3> {{rating.movie.name}}</h3> Rating {% for rating.rating %}
+        <img src= "/static/star.gif" height = "15" width = "15">
+        {% endfor %}</p>
+    {% endfor %}
+</body>
+</html>

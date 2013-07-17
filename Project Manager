@@ -68,3 +68,31 @@ A movie has many users through ratings
 month_number = strptime(date[3:6], '%b').tm_mon
 al = session.query(Movies).filter(Movies.name.like("%Aladdin%")).all()
 >>> best_movies = session.query(Movies).filter(and_(Movies.released_at < "1990-01-01 00:00:00", Movies.released_at > "1980-01-01 00:00:00")).all()
+
+ movie_id_list
+[]
+>>> for i in u.ratings:
+...     movie_id_list.append(i.movie_id)
+
+
+for i in movie_id_list:
+...     m = session.query(Movie).get(i)
+...     print m.name
+
+or....
+
+users = session.query(Uses).all()
+for u in users:
+    for r in u.ratings:
+        r.movie.name
+
+#######################################################################################
+HTML
+#######################################################################################
+
+HOMEPAGE
+
+Login
+Create User
+Get User Information
+Search Movies
