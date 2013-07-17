@@ -1,12 +1,21 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, String, DateTime
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship, backref
 
 ENGINE = None
 Session = None
 
+ENGINE = create_engine("sqlite:///ratings.db", echo=False)
+# This line is NECESSARY to make a table
+
+session = scoped_session(sessionmaker(bind=ENGINE, autocommit = False, autoflush = False))
+
 Base = declarative_base()
+Base.query = session.query_property()
+Base.metadata.create_all(ENGINE)
 
 ### Class declarations go here
 class User(Base):
@@ -21,7 +30,7 @@ class User(Base):
     zipcode = Column(String(15),nullable=True)
 
 
-class Movies(Base):
+class Movie(Base):
     __tablename__= "movies"
 
     id = Column(Integer, primary_key=True)
@@ -30,30 +39,32 @@ class Movies(Base):
     imdb_url =Column(String(64), nullable=True) 
 
 
-class Ratings(Base):
+class Rating(Base):
     __tablename__= "ratings"
 
-    id = Column(Integer, primary_key=True) 
+    id = Column(Integer, primary_key=True)
     movie_id = Column(Integer) 
-    user_id = Column(Integer)
+    user_id = Column(Integer, ForeignKey('users.id'))
     rating = Column(Integer)
+
+    # JOINS user table abd ratings table on users.id
+    user = relationship("User",backref=backref("ratings", order_by=id))
         
 
 ### End class declarations
 
+####################################################################
+# Everything below was used until we added sqlalchemy scoped_session
+####################################################################
 # creating path from model.py to database.
-def connect():
-    global ENGINE
-    global Session
+# def connect():
+#     pass
 
-    ENGINE = create_engine("sqlite:///ratings.db", echo=True)
-    Session = sessionmaker(bind=ENGINE)
+#     # return Session()
 
-    return Session()
+#  def main():
+#      """In case we need this for something"""
+#      pass
 
-def main():
-    """In case we need this for something"""
-    pass
-
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()

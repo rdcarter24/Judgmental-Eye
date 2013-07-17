@@ -62,3 +62,9 @@ A user has many movies through ratings
 A movie has many users through ratings
 
 ###For tues.... start with datetime....
+
+###### Helpful Code ####
+
+month_number = strptime(date[3:6], '%b').tm_mon
+al = session.query(Movies).filter(Movies.name.like("%Aladdin%")).all()
+>>> best_movies = session.query(Movies).filter(and_(Movies.released_at < "1990-01-01 00:00:00", Movies.released_at > "1980-01-01 00:00:00")).all()
