@@ -1,19 +1,42 @@
 <html>
+<head>
+    <style>
+    #title {
+        text-align: center;
+    }
+    form {
+        text-align: center;
+    }
+    </style>
+</head>
+
 <body>
-    <h3> Login Here! </h3>
+    <h1 id = "title">Judgemental Eye</h1>
+    
+    <br></br>
+
+    <center><img src= "/static/large-eye-final.jpg" height = "250" width = "400"></center>
+    <br></br>
+
+    <p> <form action = "/create_new_user"> <input type = "submit" value="Create New User"></form>
+    <p> <form action = "/user_list"> <input type = "submit" value="Search User"></form>
+    <p> <form action = "/"> <input type = "submit" value="Search Movie"></form>
+
+    <br></br>
+
+    
+    <p>
     <form action = "/user">
+        <div id = "login"><h3><strong> Login Below </strong></h3></div>
         <label for ="email"> Enter Email </label>
         <input type = "text" name = "email" placeholder = "Email" required/>
 
         <label for ="password"> Enter Password </label>
         <input type = "password" name = "password" placeholder = "Password" required/>
         <input type = "submit" value = "Log In"/>
-    </form>
+    </form> 
+    </p>
     <p> {{message}} </p>
-
-    <p> <a href = "/create_new_user">Create User </a></p>
-    <p> Search User </p>
-    <p> Search Movie </p>
 
 </body>
 </html>
