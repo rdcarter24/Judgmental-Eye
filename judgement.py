@@ -1,5 +1,6 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, session
 import model
+import os
 
 app = Flask(__name__)
 
@@ -11,14 +12,25 @@ def index():
 @app.route("/user")
 def user():
     """HOME PROFILE"""
-    #message = ""
-    email = request.args.get("user")
+    message = ""
+    login_message = ""
+    email = request.args.get("email")
     password = request.args.get("password")
-    user = model.session.query(model.User).get(1)    
+    try:
+        user = model.session.query(model.User).filter_by(email=email).filter_by(password=password).one()
+        if user: 
+            session["user.id"] = user.id
+            login_message = "Logged in as %s" % (user.id)
+            return render_template("user.html",email=user.email, age=user.age, 
+                zipcode=user.zipcode,ratings = user.ratings,
+                login_message=login_message)
+    except model.NoResultFound, e:
+        print e
+        message = "This is embarassing.. It appears we don't have that login on file."
+        return render_template("home.html", message = message)
+
     # user = model.session.query(model.User).filter_by(email=email).one()
     # for r in user.ratings:
-
-    return render_template("user.html",email=user.email, age=user.age, zipcode=user.zipcode,ratings = user.ratings)
 
 @app.route("/user_search")
 def user_search():
@@ -68,6 +80,8 @@ def new_user():
         u = model.session.query(model.User).filter_by(id = user.id).one()
         return render_template("new_user.html",email=u.email, age=u.age, zipcode=u.zipcode)
 
+app.secret_key = os.urandom(24)
 
 if __name__ == "__main__":
     app.run(debug = True)
+
