@@ -1,0 +1,39 @@
+<html>
+<head>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    #error{
+        color:red;
+    }
+    #login {
+        text-align: right;
+        color: gray;
+    }
+    </style>
+</head>
+<body>
+    <p id = "login"> {{ login_message }} </p>
+    <h1> Search For a Movie: </h1>
+    
+    <h3 id = "error"> {{message}} </h3>
+    
+    <h3> Search by Movie Title: </h3>
+    <form action = "/search_movie_results">
+        <label for ="movie"> Enter Movie Title Here </label>
+        <input type = "text" name = "movie" placeholder = "Movie Title" required/>
+
+        <input type = "submit" value = "Search"/>
+    </form>
+
+    <br></br>
+
+    <h3> Movies you may be interested in: </h3>
+    <p> {% for movie in movies %}
+         <a href = "/search_movie_results?movie={{ movie.name }}">Movie Title {{ movie.name }}, has {{ movie.ratings| length }} ratings</a>
+    </p>
+    {% endfor %}
+
+</body>
+</html>

@@ -7,35 +7,22 @@
     #header {
         text-align: center;
     }
-    #login {
-        text-align: right;
-        color: gray;
-    }
     </style>
 </head>
 
 <body>
-    <center><p id = "login"> {{ login_message }} </p>
     <h1 id = "header"> User Profile </h1>
     <h2 id = "header"> Email: {{email}}, Age: {{age}}, Zipcode: {{zipcode}} </h2>
     
-    
     <br></br>
-    <p> <form action = "/search_movie"> <input type = "submit" value="Rate a Movie"></form>
-
     
     <h2 id = "header"> <u>These are the movies I've watched:</u> </h2>
     
     {% for rating in ratings | sort(attribute = 'rating', reverse=True) %}
-    <p><h3> {{rating.movie.name}}</h3> Rating {% for i in range (0, rating.rating) %}
+    <center><p><h3> {{rating.movie.name}}</h3> Rating {% for i in range (0, rating.rating) %}
      <img src= "/static/star.gif" height = "15" width = "15"> {% endfor %}
-    </p>
-    {% endfor %}</center>
-    
+    </p></center>
+    {% endfor %}
 
 </body>
 </html>
-
-    <!--{% for user in users %}
-    <h2> User {{ user.id }}, age {{ user.age }}, has {{ user.ratings|length }} ratings</h2>
-    {% endfor %} -->
